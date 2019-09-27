@@ -1,0 +1,46 @@
+import java.util.*;
+public class Branch & Bound {
+  static int maxcost;
+  static boolean[] cut; 
+    static void run(int[] weights,int[]  cost,int idx,int mw ,int maxcost){
+        if(idx!=weights.length){
+        int xc,yw,tcost = 0,sumcost = 0;
+      if(idx ==-1){
+          xc=cost[cost.length-1];
+          yw=weights[weights.length-1];
+      }
+      else{      
+          xc=cost[idx]+cost[cost.length-1];
+          yw=weights[idx]+weights[weights.length-1];
+      }
+      if(idx!=weights.length-1){
+             sumcost = (Arrays.stream(cost).sum()-xc);
+      }else 
+            sumcost = (Arrays.stream(cost).sum());
+            for (int i = 0; i < cost.length; i++) {
+                if(cut[i]){
+                    sumcost-=cost[i];
+                }
+            }     
+    tcost =(Arrays.stream(cost).sum()-xc)+(mw- (Arrays.stream(weights).sum()-yw))*cost[cost.length-1]/weights[weights.length-1];
+        System.out.println(tcost+"   "+maxcost+"   ตอบ   "+sumcost);
+    if(tcost<=NewClass1.maxcost){
+        if(tcost==NewClass1.maxcost){  
+            cut[idx] = true;
+        }
+        run(weights, cost, idx+1, mw,maxcost);
+    }
+        }
+    }
+    public static void main(String[] args) {        
+      int[]  weights = {2,4,6,9};
+int[]  cost  = {10,10,12,18} ;
+int  limitWeight =15;
+cut = new boolean[weights.length];
+            
+   int x =  Arrays.stream(weights).sum();
+   maxcost =(Arrays.stream(cost).sum())+(limitWeight- (Arrays.stream(weights).sum()))*cost[cost.length-1]/weights[weights.length-1];
+   System.out.println(maxcost);   
+       run(weights, cost, 0,limitWeight,maxcost);
+}
+}
