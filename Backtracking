@@ -1,0 +1,30 @@
+import java.util.Scanner;
+public class Backtracking {
+    static  int i = 0;
+   static int run(int[]  weights,int[]  cost,int maxweights,int num,int stcost,int stw){
+   int sumcost = stcost;
+     int sumcostnot = stcost; 
+    
+   i++;
+            if(num+1<=cost.length&&stw<=maxweights){  
+                sumcostnot = run(weights, cost, maxweights, num+1,stcost,stw);
+       if(stw+weights[num]<=maxweights){     
+           stcost+=cost[num];   
+           stw+=weights[num];
+        
+         sumcost =  run(weights, cost, maxweights, num+1,stcost,stw);
+       }  
+   }      
+       return Math.max(sumcost, sumcostnot);
+} 
+    
+    public static void main(String[] args) {
+               Scanner sc = new Scanner(System.in);
+          int[]  weights = {1,2,3,4,5,6,7,8,9};
+int[]  cost  = {10,10,10,10,10,12,14,16,18} ;
+int  limitWeight =15;
+        System.out.println(run(weights, cost, limitWeight,0,0,0));
+        System.out.println(i);
+    }
+    
+}
