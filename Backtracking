@@ -1,30 +1,52 @@
 import java.util.Scanner;
-public class Backtracking {
-    static  int i = 0;
-   static int run(int[]  weights,int[]  cost,int maxweights,int num,int stcost,int stw){
-   int sumcost = stcost;
-     int sumcostnot = stcost; 
-    
-   i++;
-            if(num+1<=cost.length&&stw<=maxweights){  
-                sumcostnot = run(weights, cost, maxweights, num+1,stcost,stw);
-       if(stw+weights[num]<=maxweights){     
-           stcost+=cost[num];   
-           stw+=weights[num];
-        
-         sumcost =  run(weights, cost, maxweights, num+1,stcost,stw);
-       }  
-   }      
-       return Math.max(sumcost, sumcostnot);
-} 
-    
-    public static void main(String[] args) {
-               Scanner sc = new Scanner(System.in);
-          int[]  weights = {1,2,3,4,5,6,7,8,9};
-int[]  cost  = {10,10,10,10,10,12,14,16,18} ;
-int  limitWeight =15;
-        System.out.println(run(weights, cost, limitWeight,0,0,0));
-        System.out.println(i);
+
+public class NewClass {
+
+    static int i = 0;
+
+    static int run(int[] weights, int[] cost, int maxweights, int num, int stcost, int stw,String go) {
+        int sumcost = stcost;
+        int sumcostnot = stcost;
+         
+      
+        if (num + 1 <= cost.length && stw <= maxweights) {
+            
+           
+            sumcostnot = run(weights, cost, maxweights, num + 1, stcost, stw,go+="-");
+            if (stw + weights[num] <= maxweights) {
+                stcost += cost[num];
+                stw += weights[num];
+                sumcost = run(weights, cost, maxweights, num + 1, stcost, stw,go+=String.valueOf(cost[num])+" ");
+             // System.out.print("pick"+"  "+cost[num]+"  ");
+            
+            }             
+        }
+       
+        else{i++;
+            String[] s = go.split("-");
+           String h ="";
+            for (String string : s) {
+                if(!string.equals(""))
+                h += string+",";
+            }
+            if(h.length()==0){
+                h+="  ";
+            }
+            System.out.println(h.substring(0, h.length()-1)+"     :MAX = "+Math.max(sumcost, sumcostnot));
+           //System.out.println(go+"    "+Math.max(sumcost, sumcostnot));
+        }
+       
+        return Math.max(sumcost, sumcostnot);
     }
-    
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] weights = {10, 4, 7, 4, 9, 11, 6, 1, 9};
+        int[] cost = {3, 4, 12, 5, 10, 8, 12, 11, 9};
+        int limitWeight = 20;
+        System.out.println(run(weights, cost, limitWeight, 0, 0, 0,""));
+        System.out.println(i);
+
+    }
+
 }
